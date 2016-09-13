@@ -1,0 +1,7 @@
+hejsan 56
+hejsan 78
+hejsan 128
+hoppsan 12
+falleröj 156
+åäö 200
+tutte 210
