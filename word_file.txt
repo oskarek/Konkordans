@@ -1,0 +1,5 @@
+hejsan 0
+hoppsan 16
+falleröj 24
+åäö 32
+tutte 40

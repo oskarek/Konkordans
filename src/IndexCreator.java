@@ -22,27 +22,22 @@ public class IndexCreator {
     }
 
     void printFile() {
-        try (WordListReader in = new WordListReader(SOURCE_FILE_PATH)) {
-            WordInfo info; String currWord = null;
-            while ((info = in.getWordInfo()) != null) {
-                // new index for same word
-                if (info.word.equals(currWord)) {
-                    // Should write a new index to the index file
-                    System.out.print(", " + info.index);
-                } else { // found a new word
-                    // Should write the new word to the word file
-                    // and the index to the index file
-                    // as well as a index in the word file pointing to the new index
-                    System.out.println();
-                    currWord = info.word;
-                    System.out.print(currWord + ": ");
-                    System.out.print(info.index);
-                }
-            }
-        } catch (IOException ex) {
-            System.err.println("Reading or writing from a file failed.");
-        } catch (Exception ex) {
-            System.err.println("Unknown exception.");
+        try (
+                WordListReader in = new WordListReader(SOURCE_FILE_PATH);
+                IndexListWriter indexOut = new IndexListWriter(INDEX_LIST_FILE_PATH);
+                WordListWriter wordOut = new WordListWriter(WORD_LIST_FILE_PATH)
+        ) {
+
+            in.words().forEach((info) -> {
+                wordOut.write(info.word, indexOut.pos());
+                indexOut.write(info.indexCount);
+                info.indexes.forEach(indexOut::write);
+            });
+        } catch (FileNotFoundException e) {
+            System.err.println("Error in reading or writing to a file");
+        } catch (Exception e) {
+            System.err.println("Error in closing a file");
         }
     }
+
 }

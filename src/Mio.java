@@ -110,4 +110,14 @@ public class Mio {
     /** Returnera true om ctrl-D st�r i tur fr�n tangenterna */
     public static boolean EOF()                                               {
         return EOF(keyboard)                                                    ;}
+
+    //MIN EGAN LINE GREJ
+    /** Read a line from the file */
+    private String getLine() {
+        StringBuilder word = new StringBuilder();
+        char tkn;
+        while((tkn = GetChar()) != '\n' && GetChar() != (char)-1) word.append(tkn);
+        if (word.toString().isEmpty()) return "";
+        return word.toString();
+    }
 }
