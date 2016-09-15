@@ -17,6 +17,7 @@ public class WordListWriter implements AutoCloseable {
         out = new BufferedOutputStream(new FileOutputStream(new File(file)));
     }
 
+    /** Write a word and an index to file */
     public void write(String word, int index) {
         try {
             out.write(word.getBytes(FILE_ENCODING));
