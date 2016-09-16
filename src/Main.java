@@ -6,7 +6,10 @@ import java.io.File;
  */
 public class Main {
     public static void main(String[] args) {
-
+        File file = new File("test");
+        File file2 = new File("test2");
+        PrefixMaker pm = new PrefixMaker(file,file2);
+        pm.prefixFileMaker();
     }
 }
 

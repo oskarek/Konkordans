@@ -11,33 +11,38 @@ File readFile;
     public PrefixMaker(File writeFile, File readFile) {
         this.writeFile = writeFile;
         this.readFile = readFile;
-
-        prefixFileMaker();
     }
 
-
     /* Creates the prefix */
-    private void prefixFileMaker(){
-        String line, previous = "";
+    public void prefixFileMaker(){
+        String line;
+        int preHash = -4;
         HashCalculator hc = new HashCalculator();
         int totBytes = 0;
+        int len, bytePos;
         try {
             RandomAccessFile raf = new RandomAccessFile(writeFile, "rw");
             BufferedReader br = new BufferedReader(new FileReader(readFile));
+
             while ((line = br.readLine()) != null) {
 
                 String[] strs = line.split("\\s+");
-                if(strs[0].length() >= 3) {
-                    if(previous != strs[0].substring(0,3)) {
-                        previous = strs[0].substring(0,3);
-                    }
-                } else {
-                    previous = strs[0];
+                StringBuilder sb = new StringBuilder(strs[0]);
+                len = sb.length();
+                //Adds characters of a to the string if the length is less than 3.
+                for(int i = 0; i < Math.max(0, 3-len); i++){
+                    sb.append('a');
                 }
-                System.out.println(totBytes);
-                int bytePos = hc.getHash(previous);
-                raf.seek(bytePos);
-                raf.write(totBytes);
+
+                bytePos = hc.getHash(sb.toString().substring(0,3));
+
+                if(bytePos != preHash) {
+                    for(int i = preHash+4; i <= bytePos; i+=4) {
+                        raf.seek(i);
+                        raf.write(totBytes);
+                    }
+                    preHash = bytePos;
+                }
                 totBytes += line.getBytes().length;
             }
         } catch (Exception e) {
