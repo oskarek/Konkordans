@@ -17,7 +17,7 @@ File readFile;
     public void prefixFileMaker(){
         String line;
         int preHash = -4;
-        HashCalculator hc = new HashCalculator();
+        HashCalc hc = new HashCalc();
         int totBytes = 0;
         int len, bytePos;
         try {

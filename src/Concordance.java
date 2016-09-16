@@ -16,7 +16,7 @@ public class Concordance {
     /* En funktion givet en sträng returnerar 30 tecken före och 30 tecken i dess
      * förekomster. */
     public static void concordancePrinter(String str){
-        HashCalculator hc = new HashCalculator();
+        HashCalc hc = new HashCalc();
         int hash = hc.getHash(str);
         try {
             RandomAccessFile raf_prefix = new RandomAccessFile(PREFIX_FILE_PATH, "r");
